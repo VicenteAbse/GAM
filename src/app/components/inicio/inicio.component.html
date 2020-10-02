@@ -1,0 +1,34 @@
+<br>
+
+        <div class="row" *ngFor="let noticia of noticias">
+            <div class="col-md-6 p-4 d-flex" >
+
+                <div class="div-noticia">
+                    
+                    <div >
+                        <img [src]="noticia.imagen" class="image" style="width:100%">
+                        <div class="middle">
+                            <div class="text" (click)="irANoticia(noticia.id)">Leer</div>
+                        </div>
+                        <h1>{{noticia.titulo}}</h1>
+                        <p>Autor: {{noticia.autor}}</p>
+                    </div>
+                </div>         
+            </div> 
+
+        <div class="col-md-6 d-flex">
+            <div>
+                <h1>Noticias relacionadas:</h1>
+                <div *ngFor="let relacionado of relacionados" class="d-flex p-3">
+                    <div class="container-relacionado">
+                        <img [src]="relacionado.imagen" class="image">
+                        <div class="middle-relacionado">
+                            <div class="text-relacionado" (click)="irANoticia(relacionado.id)">Leer</div>
+                        </div>       
+                   </div>
+                   <div class="col">
+                    <h3>{{relacionado.titulo}}</h3> 
+                   </div>
+                </div>
+            </div> 
+        </div>

@@ -1,0 +1,37 @@
+Esta es la noticia {{idNoticia}}
+<br>
+<br>
+    
+<div class="mat-h1">{{noticia.titulo}}</div>
+    <div class="row">
+        
+        <div class="col-md-5">
+            <div class="card imagen">
+                <img src="{{noticia.imagen}}" class="img-fluid">
+                Autor: {{noticia.autor}}
+            </div>
+        </div>
+        <div class="col-md-7">
+               
+                <div class="mat-body-strong cuerpo">{{noticia.cuerpo}}</div>
+        </div>
+
+
+        
+
+          
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="form-group w-100">
+        <h2>Deja una opinion</h2>
+        <form ng-controller="Controller">
+            <textarea class="form-control" rows="3" ng-model="cmtName" placeholder="Tu comentario"></textarea>
+            <br/>
+            <button class="btn btn-success">Comentar</button>
+            <br/>
+            <hr/>
+            
+        </form> 
+    </div>
