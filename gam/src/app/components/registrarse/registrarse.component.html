@@ -1,0 +1,29 @@
+<mat-card>
+    <mat-card-title>Registrarse</mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="profileForm" class="example-form">
+            <p>
+                <mat-form-field>
+                    <input type="text" formControlName="name" matInput placeholder="Nombre" required/>
+                </mat-form-field>
+            </p> 
+
+            <p>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Email</mat-label>
+                    <input type="email" formControlName="email" matInput placeholder="Ej: nombre@correo.com" required/>
+                </mat-form-field>
+             
+            <p>
+                <mat-form-field>
+                    <input type="password" formControlName="password" matInput placeholder="Contraseña" required/>
+                </mat-form-field>
+            </p>
+
+           
+
+            <button type="submit" mat-raised-button color="accent"(click)="insertUsuario()">Ingresar</button>
+
+        </form>
+    </mat-card-content> 
+</mat-card>

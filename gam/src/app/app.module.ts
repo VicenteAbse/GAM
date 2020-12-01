@@ -22,6 +22,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CrearNoticiaComponent } from './components/crear-noticia/crear-noticia.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NoticiaPreviewComponent } from './components/noticia-preview/noticia-preview.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   { path: 'inicio', component: InicioComponent },
@@ -41,6 +43,9 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     MatFormFieldModule,
     NgbModule,
