@@ -1,44 +1,41 @@
-<div class="col-lg-6 mx-auto">
-    <div class="card">
-        <div class="card-header">
-            Escribe tu Noticia
-
+<div class="card" style="width:25rem">
+    <div class="card-body">
+      <form [formGroup]="newsForm" (submit)="onSubmit(newsForm.value)">
+        
+        <div class="form-group">
+          <input class="form-control" formControlName="titulo" placeholder="Titulo">
+          <div class="text-danger" *ngIf="isSubmitted && formControls.titulo.errors?.required">Este campo es obligatorio.
+          </div>
         </div>
-        <div class="card-body">
-            <form (submit)="subirNoticia(titulo, cuerpo)">
-
-                <div class="form-group">
-                    <mat-label>Categoria: </mat-label>
-                    <select matNativeControl required>
-                        <option value="Futbol">Fútbol</option>
-                        <option value="Tenis">Tenis</option>
-                        <option value="eSports">eSports</option>
-                     </select>
-                </div>
-
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Titulo" required #titulo>
-                </div>
-
-                <div class="fomr-group">
-                    <textarea class="form-control" rows="10" placeholder="Cuerpo" required #cuerpo></textarea>
-                </div>
-                
-                <input type="file" class="d-none" (change)="onNoticiaSelected($event)" #noticiaInput>
-                
-                <div class="image">
-                    <img [src]="photoSelected || 'assets/no-image.png'" class="img-fluid" alt="No Image" (click)="noticiaInput.click()">
-                </div>
-
-                <button class="btn btn-primary btn-block">
-                    Subir Noticia 
-                </button>
-    
-                
-                
-                
-                
-            </form>
+        <div class="form-group">
+            <textarea class="form-control" formControlName="cuerpo" placeholder="Cuerpo" rows="10"></textarea>
+            <div class="text-danger" *ngIf="isSubmitted && formControls.cuerpo.errors?.required">Este campo es obligatorio.
+            </div>
+          </div>
+        <div class="form-group">
+            Categoria
+          <select formControlName="categoria" class="form-control">
+            <option value="futbol">Futbol</option>
+            <option value="tenis">Tenis</option>
+            <option value="eSports">eSports</option>
+          </select>
         </div>
+        <div class="form-row">
+            <div class="text-center">
+                <img [src]="imgSrc" width="350px" height="250px" (click)="fileUploader.click()">
+              </div>
+              <div class="form-group">
+        
+                <input type="file" accept="image/*" class="form-control" #fileUploader formControlName="imagen"
+                  (change)="showPreview($event)">
+                <div class="text-danger" *ngIf="isSubmitted && formControls.imagen.errors?.required">Este campo es obligatorio.
+                </div>
+              </div>
+          <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-success btn-block float-right">Subir noticia</button>
+          </div>
+        </div>
+        
+      </form>
     </div>
-</div>
+  </div>

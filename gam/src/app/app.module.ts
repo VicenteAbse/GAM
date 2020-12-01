@@ -24,6 +24,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NoticiaPreviewComponent } from './components/noticia-preview/noticia-preview.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireStorageModule } from "@angular/fire/storage";
+import { AngularFireDatabaseModule } from "@angular/fire/database";
+import { environment } from "../environments/environment";
 
 const appRoutes: Routes = [
   { path: 'inicio', component: InicioComponent },
@@ -44,6 +48,9 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,

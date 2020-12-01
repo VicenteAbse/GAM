@@ -52,11 +52,11 @@ router.post('/crearUsuario', function(req,res){
 })
 
 router.post('/subirNoticia', function(req,res){
-  db.collection('Usuarios').add({
+  db.collection('Noticias').add({
    titulo: req.body.titulo,
+   categoria: req.body.categoria,
    cuerpo: req.body.cuerpo,
    imagen: req.body.imagen,
-   autor: req.body.autor
  }).then(function(docRef){
    res.json({
      status: 200,

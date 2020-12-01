@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NoticiaService } from 'src/app/services/noticia.service';
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
@@ -7,25 +8,24 @@ import { Router } from '@angular/router';
 })
 export class InicioComponent implements OnInit {
 
-  noticias = [
-    { id:"1", titulo: "Vidal ya entrena con el Inter", imagen: "assets/arturo vidal inter.jpg", autor: "Walter White" },
-    { id:"2", titulo: "Garin debuta con victoria en Roland Garros", imagen: "assets/Garin roland garros.jpg", autor: "Homero Simpson" },
-    { id:"3", titulo: "Comienza el mundial de League of Legends", imagen: "assets/lol worlds.jpg", autor: "El Autor de la noticia"},
-  ];
+  
+  listaNoticias: any[];
+  indexArray: any[];
 
-  relacionados = [
-    { id: "4", titulo: "Colo-Colo anuncia la salida de Gualberto Jara", imagen:"assets/Gualberto Jara.jpg" },
-    { id:"5", titulo:"Claudio Bravo se pierde los partidos ante Uruguay y Colombia", imagen:"assets/Claudio Bravo.jpg"}
-  ]
-
-
-  constructor(private route: Router) { } 
+  constructor(private route: Router, private service: NoticiaService) { } 
 
   ngOnInit(): void {
+    this.service.getImageDetailList();
+    this.service.detallesNoticia.snapshotChanges().subscribe(
+      list => {
+        this.listaNoticias = list.map(item => { return item.payload.val(); });
+        this.indexArray = Array.from(Array(Math.ceil(this.listaNoticias.length+1 / 3)).keys());
+      }
+    ); 
   }
 
-  irANoticia(id:string) {
-    this.route.navigate(['noticia-preview'], { queryParams: { idNoticia: id } });
+  irANoticia(id: any) { 
+    this.route.navigate(['noticia-preview'], { queryParams: { idNoticia: id } }); 
   }
 
 }

@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { finalize } from "rxjs/operators";
+import { NoticiaService } from "src/app/services/noticia.service";
 
-
-interface HtmlInputEvent extends Event {
-  target: HTMLInputElement & EventTarget;
-}
-
-interface Categoria {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-crear-noticia',
@@ -18,32 +13,80 @@ interface Categoria {
   
   
 export class CrearNoticiaComponent implements OnInit {
-  file: File;
-  photoSelected: String | ArrayBuffer;
+  imgSrc: string;
+  selectedImage: any = null;
+  isSubmitted: boolean;
+
+  
 
 
-  constructor() { }
+  constructor( private storage: AngularFireStorage, private service: NoticiaService ) { }
+
+  newsForm = new FormGroup({
+    titulo: new FormControl('', Validators.required),
+    categoria: new FormControl(''),
+    cuerpo: new FormControl('', Validators.required),
+    imagen : new FormControl('', Validators.required),
+  })
 
   
 
   ngOnInit(): void {
+    this.service.getImageDetailList();
+    this.resetForm();
   }
   
-
-  onNoticiaSelected(event: HtmlInputEvent) {
+  showPreview(event: any) {
     if (event.target.files && event.target.files[0]) {
-      this.file = <File>event.target.files[0];
-      // image preview
       const reader = new FileReader();
-      reader.onload = e => this.photoSelected = reader.result;
-      reader.readAsDataURL(this.file);
+      reader.onload = (e: any) => this.imgSrc = e.target.result;
+      reader.readAsDataURL(event.target.files[0]);
+      this.selectedImage = event.target.files[0];
+    }
+    else {
+      this.imgSrc = '/assets/no-image.png';
+      this.selectedImage = null;
     }
   }
 
-  subirNoticia(titulo: HTMLInputElement, cuerpo: HTMLTextAreaElement): boolean {
-    console.log(titulo.value)
-    console.log(cuerpo.value)
-    return false;
+  onSubmit(formValue) {
+    this.isSubmitted = true;
+    if (this.newsForm.valid) {
+      var filePath = `${formValue.categoria}/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+      const fileRef = this.storage.ref(filePath);
+      this.storage.upload(filePath, this.selectedImage).snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe((url) => {
+            formValue['imagen'] = url;
+            this.service.insertImageDetails(formValue);
+            this.resetForm();
+          })
+        })
+      ).subscribe();
+    }
   }
+
+  get formControls() {
+    return this.newsForm['controls'];
+  }
+
+  resetForm() {
+    this.newsForm.reset();
+    this.newsForm.setValue({
+      titulo: '',
+      categoria: 'Futbol',
+      cuerpo: '',
+      imagen: ''
+    });
+    this.imgSrc = '/assets/no-image.png';
+    this.selectedImage = null;
+    this.isSubmitted = false;
+  }
+  
+
+
+
+
+
 
 }

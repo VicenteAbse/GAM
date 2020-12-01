@@ -1,25 +1,19 @@
-Esta es la noticia {{idNoticia}}
+
 <br>
 <br>
-    
-<div class="mat-h1">{{noticia.titulo}}</div>
+<table *ngIf="listaNoticias">
+        <div class="mat-h1">{{listaNoticias[idNoticia].titulo}}</div>
     <div class="row">
         
-        <div class="col-md-5">
+        <div class="col">
             <div class="card imagen">
-                <img src="{{noticia.imagen}}" class="img-fluid">
-                Autor: {{noticia.autor}}
+                <img [src]="listaNoticias[idNoticia].imagen" class="img-fluid">
             </div>
         </div>
-        <div class="col-md-7">
-               
-                <div class="mat-body-strong cuerpo">{{noticia.cuerpo}}</div>
+        <div class="col">
+                <div class="mat-body-strong cuerpo">{{listaNoticias[idNoticia].cuerpo}}</div>
         </div>
-
-
-        
-
-          
+     
     </div>
     <br>
     <br>
@@ -35,3 +29,4 @@ Esta es la noticia {{idNoticia}}
             
         </form> 
     </div>
+</table>

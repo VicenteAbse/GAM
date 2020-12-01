@@ -19,7 +19,6 @@ export class RegistrarseComponent implements OnInit {
   });
 
   async insertUsuario(){
-    console.log("intento de crear usaurio",this.profileForm.valid)
     if(this.profileForm.valid){
 
       var validar

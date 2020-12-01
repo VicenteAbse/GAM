@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+
 
 const apiUrl = "http://localhost:3000/api/"
 
@@ -7,8 +9,19 @@ const apiUrl = "http://localhost:3000/api/"
   providedIn: 'root'
 })
 export class NoticiaService {
+  detallesNoticia: AngularFireList<any>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private firebase: AngularFireDatabase) {
+   }
+
+  getImageDetailList() {
+    this.detallesNoticia = this.firebase.list('Noticias');
+  }
+
+  insertImageDetails(Noticia) {
+    this.detallesNoticia.push(Noticia);
+  }
+
 
   crearUsuario(data) {
     console.log(data)
