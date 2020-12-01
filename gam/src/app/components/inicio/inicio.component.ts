@@ -19,7 +19,7 @@ export class InicioComponent implements OnInit {
     this.service.detallesNoticia.snapshotChanges().subscribe(
       list => {
         this.listaNoticias = list.map(item => { return item.payload.val(); });
-        this.indexArray = Array.from(Array(Math.ceil(this.listaNoticias.length+1 / 3)).keys());
+        this.indexArray = Array.from(Array(Math.ceil(this.listaNoticias.length)).keys());
       }
     ); 
   }
